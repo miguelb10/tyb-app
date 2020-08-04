@@ -18,10 +18,15 @@ import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { FormClienteComponent } from './clientes/form-cliente/form-cliente.component';
+import { AuthGuard } from './usuarios/guards/auth.guard';
+import { RoleGuard } from './usuarios/guards/role.guard';
 
 const routes: Routes = [
   {path: '', redirectTo: '/clientes', pathMatch: 'full'},
   {path: 'clientes', component: ClientesComponent},
+  {path: 'clientes/page/:page', component: ClientesComponent},
+  {path: 'clientes/form', component: FormClienteComponent, canActivate: [AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'}},
   {path: 'login', component: LoginComponent},
 ];
 
@@ -32,7 +37,8 @@ const routes: Routes = [
     ClientesComponent,
     FacturasComponent,
     LoginComponent,
-    PaginatorComponent
+    PaginatorComponent,
+    FormClienteComponent
   ],
   imports: [
     BrowserModule,

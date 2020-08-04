@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { URL_BACKEND } from '../config/config';
 import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpRequest, HttpEvent } from '@angular/common/http';
 import { map, catchError, tap } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import { Cliente } from './cliente';
 
 @Injectable({
@@ -33,6 +33,60 @@ export class ClienteService {
         (response.content as Cliente[]).forEach( cliente => {
           console.log(cliente.nombre);
         })
+      })
+    );
+  }
+
+  create(cliente: Cliente) : Observable<Cliente>{
+    return this.http.post(this.urlEndPoint, cliente).pipe(
+      map((ressponse: any) => ressponse.cliente as Cliente),
+      catchError(e => {
+        if(e.status==400){
+          return throwError(e);
+        }
+        if(e.error.mensaje){
+          console.error(e.error.mensaje);
+        }
+        return throwError(e);
+      })
+    );
+  }
+
+  getCliente(id): Observable<Cliente>{
+    return this.http.get<Cliente>(`${this.urlEndPoint}/${id}`).pipe(
+      catchError(e => {
+        if(e.status != 401 && e.error.mensaje){
+          this.router.navigate(['/clientes']);
+          if(e.error.mensaje){
+            console.error(e.error.mensaje);
+          }
+        }
+        return throwError(e);
+      })
+    );
+  }
+
+  update(cliente: Cliente): Observable<any>{
+    return this.http.put<any>(`${this.urlEndPoint}/${cliente.id}`, cliente).pipe(
+      catchError(e => {
+        if(e.status==400){
+          return throwError(e);
+        }
+        if(e.error.mensaje){
+          console.error(e.error.mensaje);
+        }
+        return throwError(e);
+      })
+    );
+  }
+
+  delete(id: number): Observable<Cliente>{
+    return this.http.delete<Cliente>(`${this.urlEndPoint}/${id}`).pipe(
+      catchError(e => {
+        if(e.error.mensaje){
+          console.error(e.error.mensaje);
+        }
+        return throwError(e);
       })
     );
   }
