@@ -23,7 +23,7 @@ import { AuthGuard } from './usuarios/guards/auth.guard';
 import { RoleGuard } from './usuarios/guards/role.guard';
 
 const routes: Routes = [
-  {path: '', redirectTo: '/clientes', pathMatch: 'full'},
+  {path: '', redirectTo: '/login', pathMatch: 'full'},
   {path: 'clientes', component: ClientesComponent},
   {path: 'clientes/page/:page', component: ClientesComponent},
   {path: 'clientes/form', component: FormClienteComponent, canActivate: [AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'}},

@@ -7,14 +7,16 @@
           {{ err }}
       </li>
   </ul>
-  <div class="card bg-dark text-white">
-      <div class="card-header">{{ titulo }}</div>
-      <div class="card-body">
+  <div class="card border-primary mb-3">
+    <div class="card-body text-primary">
+      <h5 class="card-title">Crear cliente</h5>
           <form #clienteForm="ngForm">
               <div class="form-group row">
                   <label for="nombre" class="col-form-label col-sm-2">Nombre</label>
                   <div class="col-sm-6">
-                      <input type="text" class="form-contol" [(ngModel)]="cliente.nombre" name="nombre" #nombre="ngModel">
+                    <div class="input-group no-border input-lg">
+                      <input [(ngModel)]="cliente.nombre" type="text" class="form-control" name="nombre" id="nombre" placeholder="Nombre" #nombre="ngModel" autofocus required>
+                    </div>
                       <div class="alert alert-danger" *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)">
                           <div *ngIf="nombre.errors.required">
                               Nombre es requerido
@@ -28,7 +30,9 @@
               <div class="form-group row">
                   <label for="ruc" class="col-form-label col-sm-2">RUC</label>
                   <div class="col-sm-6">
-                      <input type="text" class="form-contol" [(ngModel)]="cliente.ruc" name="ruc" #ruc="ngModel">
+                    <div class="input-group no-border input-lg">
+                      <input [(ngModel)]="cliente.ruc" type="text" class="form-control" name="ruc" id="ruc" #ruc="ngModel" placeholder="RUC" autofocus required>
+                    </div>
                       <div class="alert alert-danger" *ngIf="ruc.invalid && (ruc.dirty || ruc.touched)">
                           <div *ngIf="ruc.errors.required">
                               RUC es requerido
@@ -37,9 +41,24 @@
                   </div>
               </div>
               <div class="form-group row">
+                  <label for="email" class="col-form-label col-sm-2">Direccion Fiscal</label>
+                  <div class="col-sm-6">
+                    <div class="input-group no-border input-lg">
+                      <input [(ngModel)]="cliente.direccionFiscal" type="text" class="form-control" name="direccionFiscal" id="direccionFiscal" #direccionFiscal="ngModel" placeholder="Direccion Fiscal" autofocus required>
+                    </div>
+                      <div class="alert alert-danger" *ngIf="direccionFiscal.invalid && (direccionFiscal.dirty || direccionFiscal.touched)">
+                          <div *ngIf="direccionFiscal.errors.required">
+                              Email es requerido
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="form-group row">
                   <label for="email" class="col-form-label col-sm-2">Email</label>
                   <div class="col-sm-6">
-                      <input type="text" class="form-contol" [(ngModel)]="cliente.email" name="email" #email="ngModel">
+                    <div class="input-group no-border input-lg">
+                      <input [(ngModel)]="cliente.email" type="text" class="form-control" name="email" id="email" #email="ngModel" placeholder="Email" autofocus required>
+                    </div>
                       <div class="alert alert-danger" *ngIf="email.invalid && (email.dirty || email.touched)">
                           <div *ngIf="email.errors.required">
                               Email es requerido
