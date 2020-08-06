@@ -1,1 +1,91 @@
-<p>form-producto works!</p>
+<app-header></app-header>
+<div class="wrapper">
+  <div class="section">
+  <div class="container">
+    <ul class="alert alert-danger" *ngIf="errores?.length > 0">
+      <li *ngFor="let err of errores">
+          {{ err }}
+      </li>
+  </ul>
+  <div class="card border-primary mb-3">
+    <div class="card-body text-primary">
+      <h5 class="card-title">Crear producto</h5>
+          <form #productoForm="ngForm">
+              <div class="form-group row">
+                  <label for="nombre" class="col-form-label col-sm-2">Nombre</label>
+                  <div class="col-sm-6">
+                    <div class="input-group no-border input-lg">
+                      <input [(ngModel)]="producto.nombre" type="text" class="form-control" name="nombre" id="nombre" placeholder="Nombre" #nombre="ngModel" autofocus required>
+                    </div>
+                      <div class="alert alert-danger" *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)">
+                          <div *ngIf="nombre.errors.required">
+                              Nombre es requerido
+                          </div>
+                          <div *ngIf="nombre.errors.minlength">
+                              Nombre debe tener al menos 4 caracteres
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="form-group row">
+                  <label for="descripcion" class="col-form-label col-sm-2">Descripción</label>
+                  <div class="col-sm-6">
+                    <div class="input-group no-border input-lg">
+                      <input [(ngModel)]="producto.descripcion" type="text" class="form-control" name="descripcion" id="descripcion" #descripcion="ngModel" placeholder="Descripcion" autofocus required>
+                    </div>
+                      <div class="alert alert-danger" *ngIf="descripcion.invalid && (descripcion.dirty || descripcion.touched)">
+                          <div *ngIf="descripcion.errors.required">
+                            Descripcion es requerido
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="form-group row">
+                  <label for="precio" class="col-form-label col-sm-2">Precio</label>
+                  <div class="col-sm-6">
+                    <div class="input-group no-border input-lg">
+                      <input [(ngModel)]="producto.precio" type="text" class="form-control" name="precio" id="precio" #precio="ngModel" placeholder="Precio" autofocus required>
+                    </div>
+                      <div class="alert alert-danger" *ngIf="precio.invalid && (precio.dirty || precio.touched)">
+                          <div *ngIf="precio.errors.required">
+                            Precio es requerido
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="form-group row">
+                  <label for="stock" class="col-form-label col-sm-2">Stock</label>
+                  <div class="col-sm-6">
+                    <div class="input-group no-border input-lg">
+                      <input [(ngModel)]="producto.stock" type="text" class="form-control" name="stock" id="stock" #stock="ngModel" placeholder="Email" autofocus required>
+                    </div>
+                      <div class="alert alert-danger" *ngIf="stock.invalid && (stock.dirty || stock.touched)">
+                          <div *ngIf="stock.errors.required">
+                            Stock es requerido
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="form-group row">
+                  <label for="color" class="col-form-label col-sm-2">Color</label>
+                  <div class="col-sm-6">
+                      <select [compareWith]="compararColor" class="form-contol" [(ngModel)]="producto.color" name="color" style="width: 500px;">
+                          <option [ngValue]="undefined">--- seleccionar un color ---</option>
+                          <option *ngFor="let color of colors" [ngValue]="color">{{color.nombre}}</option>
+                      </select>
+                  </div>
+              </div>  
+              <div class="form-group row">
+                  <div class="col-sm-6">
+                      <button class="btn btn-primary" role="button" (click)='create()' *ngIf="!producto.id else elseBlock" [disabled]="!productoForm.form.valid">Crear</button>
+                      <ng-template #elseBlock>
+                          <button class="btn btn-primary" role="button" (click)='update()' [disabled]="!productoForm.form.valid">Editar</button>
+                      </ng-template>
+                  </div>
+              </div>
+          </form>
+      </div>
+  </div>
+  </div>
+</div>
+</div>

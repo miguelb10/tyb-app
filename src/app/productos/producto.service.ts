@@ -5,6 +5,7 @@ import { HttpClient, HttpRequest, HttpEvent } from '@angular/common/http';
 import { map, catchError, tap } from 'rxjs/operators';
 import { Observable, of, throwError } from 'rxjs';
 import { Producto } from './producto';
+import { Color } from '../colors/color';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +14,11 @@ export class ProductoService {
 
   private urlEndPoint: string = URL_BACKEND + '/api/productos';
   constructor(private http: HttpClient, private router: Router) { }
+
+  getColors(): Observable<Color[]>{
+    return this.http.get<Color[]>(this.urlEndPoint + '/colores');
+  }
+
   getProductos(page: number): Observable<any> {
     return this.http.get(this.urlEndPoint + '/page/' + page).pipe(
       tap((response: any) => {

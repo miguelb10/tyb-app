@@ -24,9 +24,14 @@ import { RoleGuard } from './usuarios/guards/role.guard';
 import { ProductosComponent } from './productos/productos.component';
 import { FormProductoComponent } from './productos/form-producto/form-producto.component';
 import { ColorsComponent } from './colors/colors.component';
+import { FormFacturaComponent } from './facturas/form-factura/form-factura.component';
+import { LetrasComponent } from './letras/letras.component';
+import { CajasComponent } from './cajas/cajas.component';
+import { InicioComponent } from './inicio/inicio.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/login', pathMatch: 'full'},
+  {path: 'inicio', component: InicioComponent},
   {path: 'clientes', component: ClientesComponent},
   {path: 'clientes/page/:page', component: ClientesComponent},
   {path: 'clientes/form', component: FormClienteComponent, canActivate: [AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'}},
@@ -49,7 +54,11 @@ const routes: Routes = [
     FormClienteComponent,
     ProductosComponent,
     FormProductoComponent,
-    ColorsComponent
+    ColorsComponent,
+    FormFacturaComponent,
+    LetrasComponent,
+    CajasComponent,
+    InicioComponent
   ],
   imports: [
     BrowserModule,
