@@ -21,12 +21,20 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormClienteComponent } from './clientes/form-cliente/form-cliente.component';
 import { AuthGuard } from './usuarios/guards/auth.guard';
 import { RoleGuard } from './usuarios/guards/role.guard';
+import { ProductosComponent } from './productos/productos.component';
+import { FormProductoComponent } from './productos/form-producto/form-producto.component';
+import { ColorsComponent } from './colors/colors.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/login', pathMatch: 'full'},
   {path: 'clientes', component: ClientesComponent},
   {path: 'clientes/page/:page', component: ClientesComponent},
   {path: 'clientes/form', component: FormClienteComponent, canActivate: [AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'}},
+  {path: 'clientes/form/:id', component: FormClienteComponent, canActivate: [AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'}},
+  {path: 'productos', component: ProductosComponent},
+  {path: 'productos/page/:page', component: ProductosComponent},
+  {path: 'productos/form', component: FormProductoComponent, canActivate: [AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'}},
+  {path: 'productos/form/:id', component: FormProductoComponent, canActivate: [AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'}},
   {path: 'login', component: LoginComponent},
 ];
 
@@ -38,7 +46,10 @@ const routes: Routes = [
     FacturasComponent,
     LoginComponent,
     PaginatorComponent,
-    FormClienteComponent
+    FormClienteComponent,
+    ProductosComponent,
+    FormProductoComponent,
+    ColorsComponent
   ],
   imports: [
     BrowserModule,
