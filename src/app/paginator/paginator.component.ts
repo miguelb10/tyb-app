@@ -7,6 +7,7 @@ import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/cor
 export class PaginatorComponent implements OnInit, OnChanges {
 
   @Input() paginador: any;
+  @Input() linkPaginador:string;
   paginas: number[];
   desde: number;
   hasta: number;
@@ -31,7 +32,7 @@ export class PaginatorComponent implements OnInit, OnChanges {
     if(this.paginador.totalPages>5){
       this.paginas = new Array(this.hasta - this.desde + 1).fill(0).map((_valor, indice) => indice + this.desde);
     }else{
-      this.paginas = new Array(this.paginador.totalPages).fill(0).map((_valor, indice) => indice + 1);  
+      this.paginas = new Array(this.paginador.totalPages).fill(0).map((_valor, indice) => indice + 1);
     }
   }
 }

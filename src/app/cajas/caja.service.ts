@@ -4,48 +4,42 @@ import { Router } from '@angular/router';
 import { HttpClient, HttpRequest, HttpEvent } from '@angular/common/http';
 import { map, catchError, tap } from 'rxjs/operators';
 import { Observable, of, throwError } from 'rxjs';
-import { Producto } from './producto';
-import { Color } from '../colors/color';
+import { Caja } from './caja';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ProductoService {
+export class CajaService {
 
-  private urlEndPoint: string = URL_BACKEND + '/api/productos';
+  private urlEndPoint: string = URL_BACKEND + '/api/cajas';
   constructor(private http: HttpClient, private router: Router) { }
-
-  getColors(): Observable<Color[]>{
-    return this.http.get<Color[]>(this.urlEndPoint + '/colors');
-  }
-
-  getProductos(page: number): Observable<any> {
+  getCajas(page: number): Observable<any> {
     return this.http.get(this.urlEndPoint + '/page/' + page).pipe(
       tap((response: any) => {
-        console.log('ProductoService: tap 1');
-        (response.content as Producto[]).forEach( producto => {
-          console.log(producto.nombre);
+        console.log('CajaService: tap 1');
+        (response.content as Caja[]).forEach( caja => {
+          console.log(caja.motivo);
         })
       }),
       map(response => {
-        (response.content as Producto[]).map( producto => {
-          producto.nombre = producto.nombre.toUpperCase();
-          return producto;
+        (response.content as Caja[]).map( caja => {
+          caja.motivo = caja.motivo.toUpperCase();
+          return caja;
         });
         return response;
       }),
       tap(response => {
-        console.log('ProductoService: tap 2');
-        (response.content as Producto[]).forEach( producto => {
-          console.log(producto.nombre);
+        console.log('CajaService: tap 2');
+        (response.content as Caja[]).forEach( caja => {
+          console.log(caja.motivo);
         })
       })
     );
   }
 
-  create(producto: Producto) : Observable<Producto>{
-    return this.http.post(this.urlEndPoint, producto).pipe(
-      map((ressponse: any) => ressponse.producto as Producto),
+  create(caja: Caja) : Observable<Caja>{
+    return this.http.post(this.urlEndPoint, caja).pipe(
+      map((ressponse: any) => ressponse.caja as Caja),
       catchError(e => {
         if(e.status==400){
           return throwError(e);
@@ -58,11 +52,11 @@ export class ProductoService {
     );
   }
 
-  getProducto(id): Observable<Producto>{
-    return this.http.get<Producto>(`${this.urlEndPoint}/${id}`).pipe(
+  getCaja(id): Observable<Caja>{
+    return this.http.get<Caja>(`${this.urlEndPoint}/${id}`).pipe(
       catchError(e => {
         if(e.status != 401 && e.error.mensaje){
-          this.router.navigate(['/productos']);
+          this.router.navigate(['/cajas']);
           if(e.error.mensaje){
             console.error(e.error.mensaje);
           }
@@ -72,8 +66,8 @@ export class ProductoService {
     );
   }
 
-  update(producto: Producto): Observable<any>{
-    return this.http.put<any>(`${this.urlEndPoint}/${producto.id}`, producto).pipe(
+  update(caja: Caja): Observable<any>{
+    return this.http.put<any>(`${this.urlEndPoint}/${caja.id}`, caja).pipe(
       catchError(e => {
         if(e.status==400){
           return throwError(e);
@@ -86,8 +80,8 @@ export class ProductoService {
     );
   }
 
-  delete(id: number): Observable<Producto>{
-    return this.http.delete<Producto>(`${this.urlEndPoint}/${id}`).pipe(
+  delete(id: number): Observable<Caja>{
+    return this.http.delete<Caja>(`${this.urlEndPoint}/${id}`).pipe(
       catchError(e => {
         if(e.error.mensaje){
           console.error(e.error.mensaje);

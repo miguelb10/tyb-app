@@ -16,6 +16,7 @@ export class ProductosComponent implements OnInit {
 
   productos: Producto[];
   paginador: any;
+  linkPaginador: string;
   productoSeleccionado: Producto;
   urlBackend: string = URL_BACKEND;
   constructor(private productoService: ProductoService,
@@ -40,6 +41,7 @@ export class ProductosComponent implements OnInit {
       response => {
         this.productos = response.content as Producto[]
         this.paginador = response;
+        this.linkPaginador = 'productos/page';
       });
     });
   }

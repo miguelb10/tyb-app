@@ -28,19 +28,32 @@ import { FormFacturaComponent } from './facturas/form-factura/form-factura.compo
 import { LetrasComponent } from './letras/letras.component';
 import { CajasComponent } from './cajas/cajas.component';
 import { InicioComponent } from './inicio/inicio.component';
+import { FormCajaComponent } from './cajas/form-caja/form-caja.component';
+import { FormColorComponent } from './colors/form-color/form-color.component';
+import { FormLetraComponent } from './letras/form-letra/form-letra.component';
+import { FormUsuarioComponent } from './usuarios/form-usuario/form-usuario.component';
+import { UsuariosComponent } from './usuarios/usuarios.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/login', pathMatch: 'full'},
-  {path: 'inicio', component: InicioComponent},
-  {path: 'clientes', component: ClientesComponent},
-  {path: 'clientes/page/:page', component: ClientesComponent},
+  {path: 'login', component: LoginComponent},
+  {path: 'inicio', component: InicioComponent, canActivate: [AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'}},
+  {path: 'clientes', component: ClientesComponent, canActivate: [AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'}},
+  {path: 'clientes/page/:page', component: ClientesComponent, canActivate: [AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'}},
   {path: 'clientes/form', component: FormClienteComponent, canActivate: [AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'}},
   {path: 'clientes/form/:id', component: FormClienteComponent, canActivate: [AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'}},
-  {path: 'productos', component: ProductosComponent},
-  {path: 'productos/page/:page', component: ProductosComponent},
+  {path: 'productos', component: ProductosComponent, canActivate: [AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'}},
+  {path: 'productos/page/:page', component: ProductosComponent, canActivate: [AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'}},
   {path: 'productos/form', component: FormProductoComponent, canActivate: [AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'}},
   {path: 'productos/form/:id', component: FormProductoComponent, canActivate: [AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'}},
-  {path: 'login', component: LoginComponent},
+  {path: 'cajas', component: CajasComponent, canActivate: [AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'}},
+  {path: 'cajas/page/:page', component: CajasComponent, canActivate: [AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'}},
+  {path: 'cajas/form', component: FormCajaComponent, canActivate: [AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'}},
+  {path: 'cajas/form/:id', component: FormCajaComponent, canActivate: [AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'}},
+  {path: 'facturas', component: FacturasComponent, canActivate: [AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'}},
+  {path: 'facturas/page/:page', component: FacturasComponent, canActivate: [AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'}},
+  {path: 'facturas/form', component: FormFacturaComponent, canActivate: [AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'}},
+  {path: 'facturas/form/:id', component: FormFacturaComponent, canActivate: [AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'}},
 ];
 
 @NgModule({
@@ -58,7 +71,12 @@ const routes: Routes = [
     FormFacturaComponent,
     LetrasComponent,
     CajasComponent,
-    InicioComponent
+    InicioComponent,
+    FormCajaComponent,
+    FormColorComponent,
+    FormLetraComponent,
+    FormUsuarioComponent,
+    UsuariosComponent
   ],
   imports: [
     BrowserModule,

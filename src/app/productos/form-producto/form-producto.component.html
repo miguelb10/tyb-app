@@ -57,7 +57,7 @@
                   <label for="stock" class="col-form-label col-sm-2">Stock</label>
                   <div class="col-sm-6">
                     <div class="input-group no-border input-lg">
-                      <input [(ngModel)]="producto.stock" type="text" class="form-control" name="stock" id="stock" #stock="ngModel" placeholder="Email" autofocus required>
+                      <input [(ngModel)]="producto.stock" type="text" class="form-control" name="stock" id="stock" #stock="ngModel" placeholder="Stock" autofocus required>
                     </div>
                       <div class="alert alert-danger" *ngIf="stock.invalid && (stock.dirty || stock.touched)">
                           <div *ngIf="stock.errors.required">
@@ -69,12 +69,14 @@
               <div class="form-group row">
                   <label for="color" class="col-form-label col-sm-2">Color</label>
                   <div class="col-sm-6">
-                      <select [compareWith]="compararColor" class="form-contol" [(ngModel)]="producto.color" name="color" style="width: 500px;">
+                    <div class="input-group no-border input-lg">
+                      <select [compareWith]="compararColor" class="custom-select" [(ngModel)]="producto.color" name="color" style="width: 500px;">
                           <option [ngValue]="undefined">--- seleccionar un color ---</option>
                           <option *ngFor="let color of colors" [ngValue]="color">{{color.nombre}}</option>
                       </select>
+                    </div>
                   </div>
-              </div>  
+              </div>
               <div class="form-group row">
                   <div class="col-sm-6">
                       <button class="btn btn-primary" role="button" (click)='create()' *ngIf="!producto.id else elseBlock" [disabled]="!productoForm.form.valid">Crear</button>
