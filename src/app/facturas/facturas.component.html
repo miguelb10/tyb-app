@@ -1,1 +1,53 @@
-<p>facturas works!</p>
+<app-header></app-header>
+<div class="wrapper">
+  <div class="section">
+  <div class="container">
+    <div class="card border-primary mb-3">
+  <div class="card-body text-primary">
+    <h5 class="card-title">Listado de facturas</h5>
+    <div class="my-2 text-left">
+      <button *ngIf="authService.hasRole('ROLE_ADMIN')" class="btn btn-rounded btn-primary" type="button" [routerLink] = "['/facturas/form']">
+        Crear Factura
+      </button>
+    </div>
+    <div *ngIf="facturas?.length == 0" class="alert alert-info">
+      No hay registros en la base de datos!
+    </div>
+    <table class="table table-bordered table-striped" *ngIf="facturas?.length>0">
+        <thead>
+          <tr>
+              <th *ngIf="authService.hasRole('ROLE_USER')">#</th>
+              <th>Serie</th>
+              <th>Correlativo</th>
+              <th>Cliente</th>
+              <th>Total</th>
+              <th>Fecha de emisión</th>
+              <th *ngIf="authService.hasRole('ROLE_ADMIN')">Editar</th>
+              <th *ngIf="authService.hasRole('ROLE_ADMIN')">Eliminar</th>
+          </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let factura of facturas">
+                <td *ngIf="authService.hasRole('ROLE_USER')">{{ factura.id }}
+                </td>
+                <td>{{ factura.serie.nombre }}</td>
+                <td>{{ factura.correlativo }}</td>
+                <td>{{ factura.cliente.nbombre }}</td>
+                <td>{{ factura.total }}</td>
+                <td>{{ factura.fechaEmision }}</td>
+                <td *ngIf="authService.hasRole('ROLE_ADMIN')">
+                  <button type="button" name="button" [routerLink]="['/factura/form', factura.id]" class="btn btn-primary">Editar</button>
+                </td>
+                <td *ngIf="authService.hasRole('ROLE_ADMIN')">
+                  <button type="button" name="eliminar" (click)='delete(factura)' class="btn btn-danger">Eliminar</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <paginator-nav *ngIf="paginador" [paginador] = "paginador" [linkPaginador]="linkPaginador"></paginator-nav>
+  </div>
+</div>
+
+</div>
+</div>
+</div>

@@ -1,1 +1,61 @@
-<p>letras works!</p>
+<app-header></app-header>
+<div class="wrapper">
+  <div class="section">
+  <div class="container">
+    <div class="card border-primary mb-3">
+  <div class="card-body text-primary">
+    <h5 class="card-title">Listado de letras</h5>
+    <div class="my-2 text-left">
+      <button *ngIf="authService.hasRole('ROLE_ADMIN')" class="btn btn-rounded btn-primary" type="button" [routerLink] = "['/letras/form']">
+        Crear Letra
+      </button>
+    </div>
+    <div *ngIf="letras?.length == 0" class="alert alert-info">
+      No hay registros en la base de datos!
+    </div>
+    <table class="table table-bordered table-striped" *ngIf="letras?.length>0">
+        <thead>
+          <tr>
+              <th *ngIf="authService.hasRole('ROLE_USER')">#</th>
+              <th>Nombre</th>
+              <th>Descripción</th>
+              <th>Total</th>
+              <th>Adelanto</th>
+              <th>Porcentaje</th>
+              <th>Estado</th>
+              <th>Factura</th>
+              <th>Fecha de creación</th>
+              <th>Fecha de vencimiento</th>
+              <th *ngIf="authService.hasRole('ROLE_ADMIN')">Editar</th>
+              <th *ngIf="authService.hasRole('ROLE_ADMIN')">Eliminar</th>
+          </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let letra of letras">
+                <td *ngIf="authService.hasRole('ROLE_USER')">{{ letra.id }}
+                </td>
+                <td>{{ letra.nombre }}</td>
+                <td>{{ letra.descripcion }}</td>
+                <td>{{ letra.total }}</td>
+                <td>{{ letra.adelanto }}</td>
+                <td>{{ letra.porcentaje }}</td>
+                <td>{{ letra.estado }}</td>
+                <td>{{ letra.factura.id }}</td>
+                <td>{{ letra.fechaCreacion }}</td>
+                <td>{{ letra.fechaVencimiento }}</td>
+                <td *ngIf="authService.hasRole('ROLE_ADMIN')">
+                  <button type="button" name="button" [routerLink]="['/letra/form', letra.id]" class="btn btn-primary">Editar</button>
+                </td>
+                <td *ngIf="authService.hasRole('ROLE_ADMIN')">
+                  <button type="button" name="eliminar" (click)='delete(letra)' class="btn btn-danger">Eliminar</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <paginator-nav *ngIf="paginador" [paginador] = "paginador" [linkPaginador]="linkPaginador"></paginator-nav>
+  </div>
+</div>
+
+</div>
+</div>
+</div>

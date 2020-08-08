@@ -1,1 +1,53 @@
-<p>cajas works!</p>
+<app-header></app-header>
+<div class="wrapper">
+  <div class="section">
+  <div class="container">
+    <div class="card border-primary mb-3">
+  <div class="card-body text-primary">
+    <h5 class="card-title">Listado de gastos diarios</h5>
+    <div class="my-2 text-left">
+      <button *ngIf="authService.hasRole('ROLE_ADMIN')" class="btn btn-rounded btn-primary" type="button" [routerLink] = "['/cajas/form']">
+        Crear Registro
+      </button>
+    </div>
+    <div *ngIf="cajas?.length == 0" class="alert alert-info">
+      No hay registros en la base de datos!
+    </div>
+    <table class="table table-bordered table-striped" *ngIf="cajas?.length>0">
+        <thead>
+          <tr>
+              <th *ngIf="authService.hasRole('ROLE_USER')">#</th>
+              <th>Motivo</th>
+              <th>Responsable</th>
+              <th>Descripción</th>
+              <th>Tipo</th>
+              <th>Monto</th>
+              <th *ngIf="authService.hasRole('ROLE_ADMIN')">Editar</th>
+              <th *ngIf="authService.hasRole('ROLE_ADMIN')">Eliminar</th>
+          </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let caja of cajas">
+                <td *ngIf="authService.hasRole('ROLE_USER')">{{ caja.id }}
+                </td>
+                <td>{{ caja.motivo }}</td>
+                <td>{{ caja.responsable }}</td>
+                <td>{{ caja.descripcion }}</td>
+                <td>{{ caja.tipo }}</td>
+                <td>{{ caja.monto }}</td>
+                <td *ngIf="authService.hasRole('ROLE_ADMIN')">
+                  <button type="button" name="button" [routerLink]="['/caja/form', caja.id]" class="btn btn-primary">Editar</button>
+                </td>
+                <td *ngIf="authService.hasRole('ROLE_ADMIN')">
+                  <button type="button" name="eliminar" (click)='delete(caja)' class="btn btn-danger">Eliminar</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <paginator-nav *ngIf="paginador" [paginador] = "paginador" [linkPaginador]="linkPaginador"></paginator-nav>
+  </div>
+</div>
+
+</div>
+</div>
+</div>

@@ -79,5 +79,4 @@ export class CajasComponent implements OnInit {
         }
       });
     }
-
 }
