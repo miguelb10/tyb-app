@@ -36,7 +36,7 @@
                 <td>{{ caja.tipo }}</td>
                 <td>{{ caja.monto }}</td>
                 <td *ngIf="authService.hasRole('ROLE_ADMIN')">
-                  <button type="button" name="button" [routerLink]="['/caja/form', caja.id]" class="btn btn-primary">Editar</button>
+                  <button type="button" name="button" [routerLink]="['/cajas/form', caja.id]" class="btn btn-primary">Editar</button>
                 </td>
                 <td *ngIf="authService.hasRole('ROLE_ADMIN')">
                   <button type="button" name="eliminar" (click)='delete(caja)' class="btn btn-danger">Eliminar</button>

@@ -1,1 +1,96 @@
-<p>form-caja works!</p>
+<app-header></app-header>
+<div class="wrapper">
+  <div class="section">
+  <div class="container">
+    <ul class="alert alert-danger" *ngIf="errores?.length > 0">
+      <li *ngFor="let err of errores">
+          {{ err }}
+      </li>
+  </ul>
+  <div class="card border-primary mb-3">
+    <div class="card-body text-primary">
+      <h5 class="card-title">Crear registro</h5>
+          <form #cajaForm="ngForm">
+              <div class="form-group row">
+                  <label for="motivo" class="col-form-label col-sm-2">Motivo</label>
+                  <div class="col-sm-6">
+                    <div class="input-group no-border input-lg">
+                      <input [(ngModel)]="caja.motivo" type="text" class="form-control" name="motivo" id="motivo" placeholder="Motivo" #motivo="ngModel" autofocus required>
+                    </div>
+                      <div class="alert alert-danger" *ngIf="motivo.invalid && (motivo.dirty || motivo.touched)">
+                          <div *ngIf="motivo.errors.required">
+                              Motivo es requerido
+                          </div>
+                          <div *ngIf="motivo.errors.minlength">
+                              Motivo debe tener al menos 4 caracteres
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="form-group row">
+                  <label for="responsable" class="col-form-label col-sm-2">Responsable</label>
+                  <div class="col-sm-6">
+                    <div class="input-group no-border input-lg">
+                      <input [(ngModel)]="caja.responsable" type="text" class="form-control" name="responsable" id="responsable" placeholder="Responsable" #responsable="ngModel" autofocus required>
+                    </div>
+                      <div class="alert alert-danger" *ngIf="responsable.invalid && (responsable.dirty || responsable.touched)">
+                          <div *ngIf="responsable.errors.required">
+                            Responsable es requerido
+                          </div>
+                          <div *ngIf="responsable.errors.minlength">
+                            Responsable debe tener al menos 4 caracteres
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="form-group row">
+                  <label for="descripcion" class="col-form-label col-sm-2">Descripción</label>
+                  <div class="col-sm-6">
+                    <div class="input-group no-border input-lg">
+                      <input [(ngModel)]="caja.descripcion" type="text" class="form-control" name="descripcion" id="descripcion" #descripcion="ngModel" placeholder="Descripcion" autofocus required>
+                    </div>
+                      <div class="alert alert-danger" *ngIf="descripcion.invalid && (descripcion.dirty || descripcion.touched)">
+                          <div *ngIf="descripcion.errors.required">
+                            Descripcion es requerido
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="form-group row">
+                  <label for="tipo" class="col-form-label col-sm-2">Tipo</label>
+                  <div class="col-sm-6">
+                    <div class="input-group no-border input-lg">
+                      <select class="custom-select" [(ngModel)]="caja.tipo" name="tipo" style="width: 500px;">
+                          <option [ngValue]="undefined">--- seleccionar un tipo ---</option>
+                          <option *ngFor="let tipo of tipos" [ngValue]="tipo">{{tipo}}</option>
+                      </select>
+                    </div>
+                  </div>
+              </div>
+              <div class="form-group row">
+                  <label for="monto" class="col-form-label col-sm-2">Monto</label>
+                  <div class="col-sm-6">
+                    <div class="input-group no-border input-lg">
+                      <input [(ngModel)]="caja.monto" type="text" class="form-control" name="monto" id="monto" #monto="ngModel" placeholder="Monto" autofocus required>
+                    </div>
+                      <div class="alert alert-danger" *ngIf="monto.invalid && (monto.dirty || monto.touched)">
+                          <div *ngIf="monto.errors.required">
+                            monto es requerido
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="form-group row">
+                  <div class="col-sm-6">
+                      <button class="btn btn-primary" role="button" (click)='create()' *ngIf="!caja.id else elseBlock" [disabled]="!cajaForm.form.valid">Crear</button>
+                      <ng-template #elseBlock>
+                          <button class="btn btn-primary" role="button" (click)='update()' [disabled]="!cajaForm.form.valid">Editar</button>
+                      </ng-template>
+                  </div>
+              </div>
+          </form>
+      </div>
+  </div>
+  </div>
+</div>
+</div>

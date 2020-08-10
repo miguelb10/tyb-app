@@ -13,14 +13,14 @@ export class LoginComponent implements OnInit {
   titulo: string = 'Por favor Sing In!';
   usuario: Usuario;
 
-  constructor(private authService: AuthService, private router: Router) { 
+  constructor(private authService: AuthService, private router: Router) {
     this.usuario = new Usuario();
   }
 
   ngOnInit(): void {
     if(this.authService.isAutenticated()){
       swal.fire('Login', `Hola ${this.authService.usuario.username} ya estás autenticado!`, 'info');
-      this.router.navigate(['/clientes']);
+      this.router.navigate(['/inicio']);
     }
   }
 

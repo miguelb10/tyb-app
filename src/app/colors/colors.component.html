@@ -1,1 +1,47 @@
-<p>colors works!</p>
+<app-header></app-header>
+<div class="wrapper">
+  <div class="section">
+  <div class="container">
+    <div class="card border-primary mb-3">
+  <div class="card-body text-primary">
+    <h5 class="card-title">Listado de colores</h5>
+    <div class="my-2 text-left">
+      <button *ngIf="authService.hasRole('ROLE_ADMIN')" class="btn btn-rounded btn-primary" type="button" [routerLink] = "['/colors/form']">
+        Crear Color
+      </button>
+    </div>
+    <div *ngIf="colors?.length == 0" class="alert alert-info">
+      No hay registros en la base de datos!
+    </div>
+    <table class="table table-bordered table-striped" *ngIf="colors?.length>0">
+        <thead>
+          <tr>
+              <th *ngIf="authService.hasRole('ROLE_USER')">#</th>
+              <th>Nombre</th>
+              <th>Descripción</th>
+              <th *ngIf="authService.hasRole('ROLE_ADMIN')">Editar</th>
+              <th *ngIf="authService.hasRole('ROLE_ADMIN')">Eliminar</th>
+          </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let color of colors">
+                <td *ngIf="authService.hasRole('ROLE_USER')">{{ color.id }}
+                </td>
+                <td>{{ color.nombre }}</td>
+                <td>{{ color.descripcion }}</td>
+                <td *ngIf="authService.hasRole('ROLE_ADMIN')">
+                  <button type="button" name="button" [routerLink]="['/colors/form', color.id]" class="btn btn-primary">Editar</button>
+                </td>
+                <td *ngIf="authService.hasRole('ROLE_ADMIN')">
+                  <button type="button" name="eliminar" (click)='delete(color)' class="btn btn-danger">Eliminar</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <paginator-nav *ngIf="paginador" [paginador] = "paginador" [linkPaginador]="linkPaginador"></paginator-nav>
+  </div>
+</div>
+
+</div>
+</div>
+</div>

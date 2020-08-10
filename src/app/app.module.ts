@@ -33,6 +33,7 @@ import { FormColorComponent } from './colors/form-color/form-color.component';
 import { FormLetraComponent } from './letras/form-letra/form-letra.component';
 import { FormUsuarioComponent } from './usuarios/form-usuario/form-usuario.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
+import { ChartModule, LineSeriesService, CategoryService } from '@syncfusion/ej2-angular-charts';
 
 const routes: Routes = [
   {path: '', redirectTo: '/login', pathMatch: 'full'},
@@ -58,6 +59,10 @@ const routes: Routes = [
   {path: 'letras/page/:page', component: LetrasComponent, canActivate: [AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'}},
   {path: 'letras/form', component: FormLetraComponent, canActivate: [AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'}},
   {path: 'letras/form/:id', component: FormLetraComponent, canActivate: [AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'}},
+  {path: 'colors', component: ColorsComponent, canActivate: [AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'}},
+  {path: 'colors/page/:page', component: ColorsComponent, canActivate: [AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'}},
+  {path: 'colors/form', component: FormColorComponent, canActivate: [AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'}},
+  {path: 'colors/form/:id', component: FormColorComponent, canActivate: [AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'}},
 ];
 
 @NgModule({
@@ -93,9 +98,10 @@ const routes: Routes = [
     ReactiveFormsModule,
     MatAutocompleteModule,
     MatInputModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    ChartModule
   ],
-  providers: [ClienteService,
+  providers: [ClienteService, LineSeriesService, CategoryService,
   {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
   {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
   bootstrap: [AppComponent]

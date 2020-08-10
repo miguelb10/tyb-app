@@ -4,43 +4,43 @@ import { Router } from '@angular/router';
 import { HttpClient, HttpRequest, HttpEvent } from '@angular/common/http';
 import { map, catchError, tap } from 'rxjs/operators';
 import { Observable, of, throwError } from 'rxjs';
-import { Cliente } from './cliente';
+import { Color } from './color';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ClienteService {
+export class ColorService {
 
-  private urlEndPoint: string = URL_BACKEND + '/api/clientes';
+  private urlEndPoint: string = URL_BACKEND + '/api/colors';
   constructor(private http: HttpClient, private router: Router) { }
 
-  getClientes(page: number): Observable<any> {
+  getColors(page: number): Observable<any> {
     return this.http.get(this.urlEndPoint + '/page/' + page).pipe(
       tap((response: any) => {
-        console.log('ClienteService: tap 1');
-        (response.content as Cliente[]).forEach( cliente => {
-          console.log(cliente.nombre);
+        console.log('ColorService: tap 1');
+        (response.content as Color[]).forEach( color => {
+          console.log(color.nombre);
         })
       }),
       map(response => {
-        (response.content as Cliente[]).map( cliente => {
-          cliente.nombre = cliente.nombre.toUpperCase();
-          return cliente;
+        (response.content as Color[]).map( color => {
+          color.nombre = color.nombre.toUpperCase();
+          return color;
         });
         return response;
       }),
       tap(response => {
-        console.log('ClienteService: tap 2');
-        (response.content as Cliente[]).forEach( cliente => {
-          console.log(cliente.nombre);
+        console.log('ColorService: tap 2');
+        (response.content as Color[]).forEach( color => {
+          console.log(color.nombre);
         })
       })
     );
   }
 
-  create(cliente: Cliente) : Observable<Cliente>{
-    return this.http.post(this.urlEndPoint, cliente).pipe(
-      map((ressponse: any) => ressponse.cliente as Cliente),
+  create(color: Color) : Observable<Color>{
+    return this.http.post(this.urlEndPoint, color).pipe(
+      map((ressponse: any) => ressponse.color as Color),
       catchError(e => {
         if(e.status==400){
           return throwError(e);
@@ -53,11 +53,11 @@ export class ClienteService {
     );
   }
 
-  getCliente(id): Observable<Cliente>{
-    return this.http.get<Cliente>(`${this.urlEndPoint}/${id}`).pipe(
+  getColor(id): Observable<Color>{
+    return this.http.get<Color>(`${this.urlEndPoint}/${id}`).pipe(
       catchError(e => {
         if(e.status != 401 && e.error.mensaje){
-          this.router.navigate(['/clientes']);
+          this.router.navigate(['/colors']);
           if(e.error.mensaje){
             console.error(e.error.mensaje);
           }
@@ -67,8 +67,8 @@ export class ClienteService {
     );
   }
 
-  update(cliente: Cliente): Observable<any>{
-    return this.http.put<any>(`${this.urlEndPoint}/${cliente.id}`, cliente).pipe(
+  update(color: Color): Observable<any>{
+    return this.http.put<any>(`${this.urlEndPoint}/${color.id}`, color).pipe(
       catchError(e => {
         if(e.status==400){
           return throwError(e);
@@ -81,8 +81,8 @@ export class ClienteService {
     );
   }
 
-  delete(id: number): Observable<Cliente>{
-    return this.http.delete<Cliente>(`${this.urlEndPoint}/${id}`).pipe(
+  delete(id: number): Observable<Color>{
+    return this.http.delete<Color>(`${this.urlEndPoint}/${id}`).pipe(
       catchError(e => {
         if(e.error.mensaje){
           console.error(e.error.mensaje);

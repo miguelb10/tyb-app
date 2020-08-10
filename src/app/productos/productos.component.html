@@ -9,6 +9,9 @@
       <button *ngIf="authService.hasRole('ROLE_ADMIN')" class="btn btn-rounded btn-primary" type="button" [routerLink] = "['/productos/form']">
         Crear Producto
       </button>
+      <button *ngIf="authService.hasRole('ROLE_ADMIN')" class="btn btn-rounded btn-primary" type="button" [routerLink] = "['/colors']">
+        Lista de colores
+      </button>
     </div>
     <div *ngIf="productos?.length == 0" class="alert alert-info">
       No hay registros en la base de datos!
