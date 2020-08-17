@@ -5,6 +5,8 @@ import { HttpClient, HttpRequest, HttpEvent } from '@angular/common/http';
 import { map, catchError, tap } from 'rxjs/operators';
 import { Observable, of, throwError } from 'rxjs';
 import { Factura } from './factura';
+import { Producto } from '../productos/producto';
+import { Cliente } from '../clientes/cliente';
 
 @Injectable({
   providedIn: 'root'
@@ -88,5 +90,13 @@ export class FacturaService {
         return throwError(e);
       })
     );
+  }
+
+  filtrarProductos(term: string): Observable<Producto[]>{
+    return this.http.get<Producto[]>(`${this.urlEndPoint}/filtrar-productos/${term}`);
+  }
+
+  filtrarClientes(term: string): Observable<Cliente[]>{
+    return this.http.get<Cliente[]>(`${this.urlEndPoint}/filtrar-clientes/${term}`);
   }
 }
