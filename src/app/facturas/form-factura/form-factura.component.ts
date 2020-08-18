@@ -22,7 +22,8 @@ export class FormFacturaComponent implements OnInit {
   titulo: string = 'Nueva factura';
   factura: Factura = new Factura();
   cliente: Cliente = new Cliente();
-  autocompleteControl = new FormControl();
+  autocompleteControlCliente = new FormControl();
+  autocompleteControlProducto = new FormControl();
   productosFiltrados: Observable<Producto[]>;
   clientesFiltrados: Observable<Cliente[]>;
 
@@ -32,29 +33,38 @@ export class FormFacturaComponent implements OnInit {
     private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.clientesFiltrados = this.autocompleteControl.valueChanges
+    this.productosFiltrados = this.autocompleteControlProducto.valueChanges
       .pipe(
         map(value => typeof value === 'string'? value: value.nombre),
-        flatMap(value => value ? this._filter(value): [])
+        flatMap(value => value ? this._filterProducto(value): [])
       );
-    this.productosFiltrados = this.autocompleteControl.valueChanges
+    this.clientesFiltrados = this.autocompleteControlCliente.valueChanges
       .pipe(
         map(value => typeof value === 'string'? value: value.nombre),
-        flatMap(value => value ? this._filter(value): [])
+        flatMap(value => value ? this._filterCliente(value): [])
       );
   }
 
-  private _filter(value: string): Observable<Producto[]> {
+  private _filterProducto(value: string): Observable<Producto[]> {
     const filterValue = value.toLowerCase();
 
     return this.facturaService.filtrarProductos(filterValue);
   }
 
-  mostrarNombre(producto?: Producto): string | undefined{
+  private _filterCliente(value: string): Observable<Cliente[]> {
+    const filterValue = value.toLowerCase();
+
+    return this.facturaService.filtrarClientes(filterValue);
+  }
+
+  mostrarNombreProducto(producto?: Producto): string | undefined{
     return producto? producto.nombre : undefined;
   }
-  seleccionarProducto(event: MatAutocompleteSelectedEvent): void{
-    let producto = event.option.value as Producto;
+  mostrarNombreCliente(cliente?: Cliente): string | undefined{
+    return cliente? cliente.nombre : undefined;
+  }
+  seleccionarProducto(eventProducto: MatAutocompleteSelectedEvent): void{
+    let producto = eventProducto.option.value as Producto;
     console.log(producto);
 
     if(this.existeItem(producto.id)){
@@ -65,30 +75,26 @@ export class FormFacturaComponent implements OnInit {
       this.factura.items.push(nuevoItem);
     }
 
-    this.autocompleteControl.setValue('');
-    event.option.focus();
-    event.option.deselect();
+    this.autocompleteControlProducto.setValue('');
+    eventProducto.option.focus();
+    eventProducto.option.deselect();
   }
 
-  seleccionarCliente(event: MatAutocompleteSelectedEvent): void{
-    let cliente = event.option.value as Cliente;
+  seleccionarCliente(eventCliente: MatAutocompleteSelectedEvent): void{
+    let cliente = eventCliente.option.value as Cliente;
     console.log(cliente);
 
-    if(this.existeItem(cliente.id)){
-      this.incrementarCantidad(cliente.id);
-    } else {
       let nuevoItem = new Cliente();
       nuevoItem = cliente;
       this.cliente = nuevoItem;
-    }
 
-    this.autocompleteControl.setValue(cliente.nombre);
-    event.option.focus();
-    event.option.deselect();
+    this.autocompleteControlCliente.setValue(cliente.nombre);
+    eventCliente.option.focus();
+    eventCliente.option.deselect();
   }
 
-  actualizarCantidad(id: number, event: any): void{
-    let cantidad: number = event.target.value as number;
+  actualizarCantidad(id: number, eventProducto: any): void{
+    let cantidad: number = eventProducto.target.value as number;
     if(cantidad == 0){
       this.eliminarItemFactura(id);
     }
@@ -127,7 +133,7 @@ export class FormFacturaComponent implements OnInit {
     console.log(this.factura);
 
     if(this.factura.items.length == 0){
-      this.autocompleteControl.setErrors({'invalid': true});
+      this.autocompleteControlProducto.setErrors({'invalid': true});
     }
 
     if(facturaForm.form.valid && this.factura.items.length > 0){
