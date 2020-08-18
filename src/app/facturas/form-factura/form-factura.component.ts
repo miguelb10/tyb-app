@@ -10,6 +10,7 @@ import { map, flatMap } from 'rxjs/operators';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import swal from 'sweetalert2';
 import { ItemFactura } from '../item-factura';
+import { Cliente } from 'src/app/clientes/cliente';
 
 @Component({
   selector: 'app-form-factura',
@@ -20,8 +21,10 @@ export class FormFacturaComponent implements OnInit {
 
   titulo: string = 'Nueva factura';
   factura: Factura = new Factura();
+  cliente: Cliente = new Cliente();
   autocompleteControl = new FormControl();
   productosFiltrados: Observable<Producto[]>;
+  clientesFiltrados: Observable<Cliente[]>;
 
   constructor(private clienteService: ClienteService,
     private facturaService: FacturaService,
@@ -29,12 +32,11 @@ export class FormFacturaComponent implements OnInit {
     private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.activatedRoute.paramMap.subscribe(params => {
-      let clienteId = +params.get('clienteId');
-      this.clienteService.getCliente(clienteId).subscribe(cliente => {
-        this.factura.cliente = cliente
-      });
-    });
+    this.clientesFiltrados = this.autocompleteControl.valueChanges
+      .pipe(
+        map(value => typeof value === 'string'? value: value.nombre),
+        flatMap(value => value ? this._filter(value): [])
+      );
     this.productosFiltrados = this.autocompleteControl.valueChanges
       .pipe(
         map(value => typeof value === 'string'? value: value.nombre),
@@ -64,6 +66,23 @@ export class FormFacturaComponent implements OnInit {
     }
 
     this.autocompleteControl.setValue('');
+    event.option.focus();
+    event.option.deselect();
+  }
+
+  seleccionarCliente(event: MatAutocompleteSelectedEvent): void{
+    let cliente = event.option.value as Cliente;
+    console.log(cliente);
+
+    if(this.existeItem(cliente.id)){
+      this.incrementarCantidad(cliente.id);
+    } else {
+      let nuevoItem = new Cliente();
+      nuevoItem = cliente;
+      this.cliente = nuevoItem;
+    }
+
+    this.autocompleteControl.setValue(cliente.nombre);
     event.option.focus();
     event.option.deselect();
   }
