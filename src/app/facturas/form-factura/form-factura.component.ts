@@ -22,8 +22,8 @@ export class FormFacturaComponent implements OnInit {
   titulo: string = 'Nueva factura';
   factura: Factura = new Factura();
   cliente: Cliente = new Cliente();
-  autocompleteControlCliente = new FormControl();
   autocompleteControlProducto = new FormControl();
+  autocompleteControlCliente = new FormControl();
   productosFiltrados: Observable<Producto[]>;
   clientesFiltrados: Observable<Cliente[]>;
 
@@ -33,15 +33,16 @@ export class FormFacturaComponent implements OnInit {
     private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.activatedRoute.paramMap.subscribe(params => {
+      let clienteId = +params.get('clienteId');
+      this.clienteService.getCliente(clienteId).subscribe(cliente => {
+        this.factura.cliente = cliente
+      });
+    });
     this.productosFiltrados = this.autocompleteControlProducto.valueChanges
       .pipe(
         map(value => typeof value === 'string'? value: value.nombre),
         flatMap(value => value ? this._filterProducto(value): [])
-      );
-    this.clientesFiltrados = this.autocompleteControlCliente.valueChanges
-      .pipe(
-        map(value => typeof value === 'string'? value: value.nombre),
-        flatMap(value => value ? this._filterCliente(value): [])
       );
   }
 
@@ -83,10 +84,6 @@ export class FormFacturaComponent implements OnInit {
   seleccionarCliente(eventCliente: MatAutocompleteSelectedEvent): void{
     let cliente = eventCliente.option.value as Cliente;
     console.log(cliente);
-
-      let nuevoItem = new Cliente();
-      nuevoItem = cliente;
-      this.cliente = nuevoItem;
 
     this.autocompleteControlCliente.setValue(cliente.nombre);
     eventCliente.option.focus();

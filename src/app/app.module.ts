@@ -34,6 +34,7 @@ import { FormLetraComponent } from './letras/form-letra/form-letra.component';
 import { FormUsuarioComponent } from './usuarios/form-usuario/form-usuario.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
 import { ChartModule, LineSeriesService, CategoryService } from '@syncfusion/ej2-angular-charts';
+import { ModalClientesComponent } from './facturas/modal-clientes/modal-clientes.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/login', pathMatch: 'full'},
@@ -54,7 +55,7 @@ const routes: Routes = [
   {path: 'facturas', component: FacturasComponent, canActivate: [AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'}},
   {path: 'facturas/page/:page', component: FacturasComponent, canActivate: [AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'}},
   {path: 'facturas/form', component: FormFacturaComponent, canActivate: [AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'}},
-  {path: 'facturas/form/:id', component: FormFacturaComponent, canActivate: [AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'}},
+  {path: 'facturas/form/:clienteId', component: FormFacturaComponent, canActivate: [AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'}},
   {path: 'letras', component: LetrasComponent, canActivate: [AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'}},
   {path: 'letras/page/:page', component: LetrasComponent, canActivate: [AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'}},
   {path: 'letras/form', component: FormLetraComponent, canActivate: [AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'}},
@@ -85,7 +86,8 @@ const routes: Routes = [
     FormColorComponent,
     FormLetraComponent,
     FormUsuarioComponent,
-    UsuariosComponent
+    UsuariosComponent,
+    ModalClientesComponent
   ],
   imports: [
     BrowserModule,

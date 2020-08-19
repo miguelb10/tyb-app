@@ -2,39 +2,14 @@
 <div class="wrapper">
   <div class="section">
     <div class="container">
-
       <div class="form-group row">
         <div class="col-sm-6">
-
-          <mat-form-field class="example-full-width">
-            <input matInput type="text" placeholder="Ingrese nombre o razón social" aria-label="Number" matInput
-              [formControl]="clientesFiltrados" [matAutocomplete]="auto">
-            <mat-autocomplete #auto="matAutocomplete" [displayWith]="mostrarCliente"
-              (optionSelected)="seleccionarCliente($event)">
-              <mat-option *ngFor="let cli of filteredOptions | async" [value]="cli">
-                {‌{cli.razonSocial}}
-              </mat-option>
-            </mat-autocomplete>
-          </mat-form-field>
-
-            <mat-form-field>
-                <input type="text"
-                    placeholder="Añadir cliente"
-                    aria-label="Clientes"
-                    matInput
-                    [formControl]="autocompleteControlCliente"
-                    [matAutocomplete]="auto" />
-                <mat-autocomplete #auto="matAutocomplete" [displayWith]="mostrarNombreCliente" (optionSelected)="seleccionarCliente($event)">
-                <mat-option *ngFor="let cliente of clientesFiltrados | async" [value]="cliente">
-                    {{cliente.nombre}}
-                </mat-option>
-                </mat-autocomplete>
-            </mat-form-field>
-        </div>
-    </div>
-
-      <div class="form-group row">
-        <div class="col-sm-6">
+          <div class="form-group row" *ngIf="factura.cliente">
+              <label for="cliente" class="col-sm-2 col-form-label">Cliente</label>
+              <div class="col-sm-6">
+                  <input type="text" name="cliente" value="{{factura.cliente.nombre}}" class="form-control" disabled/>
+              </div>
+          </div>
             <mat-form-field>
                 <input type="text"
                     placeholder="Añadir producto"
@@ -44,7 +19,7 @@
                     [matAutocomplete]="auto" />
                 <mat-autocomplete #auto="matAutocomplete" [displayWith]="mostrarNombreProducto" (optionSelected)="seleccionarProducto($event)">
                 <mat-option *ngFor="let producto of productosFiltrados | async" [value]="producto">
-                    {{producto.nombre}}
+                    <a [routerLink]="['/facturas']">{{producto.nombre}}</a>
                 </mat-option>
                 </mat-autocomplete>
             </mat-form-field>

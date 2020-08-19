@@ -6,6 +6,7 @@ import { URL_BACKEND } from '../config/config';
 import { FacturaService } from './factura.service';
 import { AuthService } from '../usuarios/auth.service';
 import { ActivatedRoute } from '@angular/router';
+import { ModalService } from './modal.service';
 
 @Component({
   selector: 'app-facturas',
@@ -15,12 +16,14 @@ import { ActivatedRoute } from '@angular/router';
 export class FacturasComponent implements OnInit {
 
   facturas: Factura[];
+  semaforo: boolean;
   paginador: any;
   linkPaginador: string;
   facturaSeleccionado: Factura;
   urlBackend: string = URL_BACKEND;
 
   constructor(private facturaService: FacturaService,
+    public modalService: ModalService,
     public authService: AuthService,
     private activatedRoute: ActivatedRoute) { }
 
@@ -80,4 +83,8 @@ export class FacturasComponent implements OnInit {
       });
     }
 
+    abrirModal(){
+      this.semaforo = true;
+      this.modalService.abirModal();
+    }
 }
