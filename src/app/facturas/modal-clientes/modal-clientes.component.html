@@ -1,21 +1,66 @@
-<div class="abrir-modal animacion fadeIn">
-<div class="modal fade show" style="display: block;" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-modal="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        ...
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+<div class="abrir-modal animacion fadeIn" *ngIf="modalService.modal">
+  <div class="modal fade show" style="display: block;" id="exampleModalCenter" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalCenterTitle" aria-modal="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Seleccionar Cliente</h5>
+          <button (click)="cerraModal()" type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form #clienteForm="ngForm">
+            <div class="form-group row">
+              <label for="nombre" class="col-form-label col-sm-2">Filtro</label>
+              <div class="col-sm-10">
+                <mat-form-field class="input-group no-border input-lg">
+                  <input type="text" placeholder="Buscar cliente" aria-label="Clientes" matInput
+                    [formControl]="autocompleteControlCliente" [matAutocomplete]="auto" />
+                  <mat-autocomplete #auto="matAutocomplete" [displayWith]="mostrarNombreCliente"
+                    (optionSelected)="seleccionarCliente($event)">
+                    <mat-option *ngFor="let cliente of clientesFiltrados | async" [value]="cliente">
+                      <a [routerLink]="['/facturas']">{{cliente.nombre}}</a>
+                    </mat-option>
+                  </mat-autocomplete>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="alert alert-danger" *ngIf="autocompleteControlCliente.invalid && clienteForm.submitted">
+              La factura no puede no tener lineas
+            </div>
+            <div class="form-group row">
+              <label for="nombre" class="col-form-label col-sm-2">Nombre</label>
+              <div class="col-sm-10">
+                <div class="input-group no-border input-lg">
+                  <input type="text" class="form-control" name="nombre" id="nombre" value="{{cliente.nombre}}" disabled>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="ruc" class="col-form-label col-sm-2">RUC</label>
+              <div class="col-sm-10">
+                <div class="input-group no-border input-lg">
+                  <input type="text" class="form-control" name="ruc" id="ruc" value="{{cliente.ruc}}" disabled>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="email" class="col-form-label col-sm-2">Direccion Fiscal</label>
+              <div class="col-sm-10">
+                <div class="input-group no-border input-lg">
+                  <input type="text" class="form-control" name="direccionFiscal" id="direccionFiscal"
+                    value="{{cliente.direccionFiscal}}" disabled>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button (click)="cerraModal()" type="button" class="btn btn-secondary"
+                data-dismiss="modal">Cancelar</button>
+              <button (click)="continue(clienteForm)" type="submit" class="btn btn-primary">Continuar</button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   </div>
-</div>
-</div>

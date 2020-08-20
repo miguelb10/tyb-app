@@ -33,12 +33,6 @@ export class FormFacturaComponent implements OnInit {
     private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.activatedRoute.paramMap.subscribe(params => {
-      let clienteId = +params.get('clienteId');
-      this.clienteService.getCliente(clienteId).subscribe(cliente => {
-        this.factura.cliente = cliente
-      });
-    });
     this.productosFiltrados = this.autocompleteControlProducto.valueChanges
       .pipe(
         map(value => typeof value === 'string'? value: value.nombre),
