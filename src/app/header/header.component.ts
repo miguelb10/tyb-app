@@ -13,6 +13,7 @@ export class HeaderComponent implements OnInit {
   title: string = 'App Angular'
 
   constructor(public authService: AuthService, private router: Router){ }
+  nombreUser: string = this.authService.usuario.nombre;
 
   ngOnInit(): void {
   }

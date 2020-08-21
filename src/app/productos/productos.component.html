@@ -16,7 +16,7 @@
     <div *ngIf="productos?.length == 0" class="alert alert-info">
       No hay registros en la base de datos!
     </div>
-    <table class="table table-bordered table-striped" *ngIf="productos?.length>0">
+    <table class="table table-bordered table-striped table-responsive-md" *ngIf="productos?.length>0">
         <thead>
           <tr>
               <th *ngIf="authService.hasRole('ROLE_USER')">#</th>
