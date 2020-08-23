@@ -23,7 +23,6 @@
               <th>Adelanto</th>
               <th>Porcentaje</th>
               <th>Estado</th>
-              <th>Factura</th>
               <th>Fecha de creación</th>
               <th>Fecha de vencimiento</th>
               <th *ngIf="authService.hasRole('ROLE_ADMIN')">Editar</th>
@@ -40,7 +39,6 @@
                 <td>{{ letra.adelanto }}</td>
                 <td>{{ letra.porcentaje }}</td>
                 <td>{{ letra.estado }}</td>
-                <td>{{ letra.factura.id }}</td>
                 <td>{{ letra.fechaCreacion }}</td>
                 <td>{{ letra.fechaVencimiento }}</td>
                 <td *ngIf="authService.hasRole('ROLE_ADMIN')">

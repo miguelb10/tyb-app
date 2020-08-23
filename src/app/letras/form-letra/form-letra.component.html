@@ -1,1 +1,108 @@
-<p>form-letra works!</p>
+<app-header></app-header>
+<div class="wrapper">
+  <div class="section">
+  <div class="container">
+    <ul class="alert alert-danger" *ngIf="errores?.length > 0">
+      <li *ngFor="let err of errores">
+          {{ err }}
+      </li>
+  </ul>
+  <div class="card border-primary mb-3">
+    <div class="card-body text-primary">
+      <h5 class="card-title">Crear registro</h5>
+          <form #letraForm="ngForm">
+              <div class="form-group row">
+                  <label for="nombre" class="col-form-label col-sm-2">Nombre</label>
+                  <div class="col-sm-6">
+                    <div class="input-group no-border input-lg">
+                      <input [(ngModel)]="letra.nombre" type="text" class="form-control" name="nombre" id="nombre" placeholder="Nombre" #nombre="ngModel" autofocus required>
+                    </div>
+                      <div class="alert alert-danger" *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)">
+                          <div *ngIf="nombre.errors.required">
+                              Nombre es requerido
+                          </div>
+                          <div *ngIf="nombre.errors.minlength">
+                              Nombre debe tener al menos 4 caracteres
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="form-group row">
+                  <label for="descripcion" class="col-form-label col-sm-2">Descripción</label>
+                  <div class="col-sm-6">
+                    <div class="input-group no-border input-lg">
+                      <input [(ngModel)]="letra.descripcion" type="text" class="form-control" name="descripcion" id="descripcion" #descripcion="ngModel" placeholder="Descripcion" autofocus required>
+                    </div>
+                      <div class="alert alert-danger" *ngIf="descripcion.invalid && (descripcion.dirty || descripcion.touched)">
+                          <div *ngIf="descripcion.errors.required">
+                            Descripcion es requerido
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="form-group row">
+                  <label for="total" class="col-form-label col-sm-2">Total</label>
+                  <div class="col-sm-6">
+                    <div class="input-group no-border input-lg">
+                      <input [(ngModel)]="letra.total" type="text" class="form-control" name="total" id="total" #total="ngModel" placeholder="Total" onkeypress="return filterFloat(event,this);" autofocus required>
+                    </div>
+                      <div class="alert alert-danger" *ngIf="total.invalid && (total.dirty || total.touched)">
+                          <div *ngIf="total.errors.required">
+                            total es requerido
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="form-group row">
+                  <label for="adelanto" class="col-form-label col-sm-2">Adelanto</label>
+                  <div class="col-sm-6">
+                    <div class="input-group no-border input-lg">
+                      <input [(ngModel)]="letra.adelanto" type="text" class="form-control" name="adelanto" id="adelanto" #adelanto="ngModel" placeholder="Adelanto" onkeypress="return filterFloat(event,this);" autofocus required>
+                    </div>
+                      <div class="alert alert-danger" *ngIf="adelanto.invalid && (adelanto.dirty || adelanto.touched)">
+                          <div *ngIf="adelanto.errors.required">
+                            adelanto es requerido
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="form-group row">
+                  <label for="porcentaje" class="col-form-label col-sm-2">Porcentaje</label>
+                  <div class="col-sm-6">
+                    <div class="input-group no-border input-lg">
+                      <input [(ngModel)]="letra.porcentaje" type="text" class="form-control" name="porcentaje" id="porcentaje" #porcentaje="ngModel" placeholder="Porcentaje" onkeypress="return filterFloat(event,this);" autofocus required>
+                    </div>
+                      <div class="alert alert-danger" *ngIf="porcentaje.invalid && (porcentaje.dirty || porcentaje.touched)">
+                          <div *ngIf="porcentaje.errors.required">
+                            porcentaje es requerido
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="form-group row">
+                  <label for="fechaVencimiento" class="col-form-label col-sm-2">Vencimiento</label>
+                  <div class="col-sm-6">
+                    <div class="input-group no-border input-lg">
+                      <input [(ngModel)]="letra.fechaVencimiento" type="text" class="form-control" name="fechaVencimiento" id="fechaVencimiento" #fechaVencimiento="ngModel" placeholder="Fecha de vencimiento" autofocus required>
+                    </div>
+                      <div class="alert alert-danger" *ngIf="fechaVencimiento.invalid && (fechaVencimiento.dirty || fechaVencimiento.touched)">
+                          <div *ngIf="fechaVencimiento.errors.required">
+                            fechaVencimiento es requerido
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="form-group row">
+                  <div class="col-sm-6">
+                      <button class="btn btn-primary" role="button" (click)='create()' *ngIf="!letra.id else elseBlock" [disabled]="!letraForm.form.valid">Crear</button>
+                      <ng-template #elseBlock>
+                          <button class="btn btn-primary" role="button" (click)='update()' [disabled]="!letraForm.form.valid">Editar</button>
+                      </ng-template>
+                  </div>
+              </div>
+          </form>
+      </div>
+  </div>
+  </div>
+</div>
+</div>

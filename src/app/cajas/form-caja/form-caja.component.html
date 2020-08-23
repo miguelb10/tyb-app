@@ -71,7 +71,7 @@
                   <label for="monto" class="col-form-label col-sm-2">Monto</label>
                   <div class="col-sm-6">
                     <div class="input-group no-border input-lg">
-                      <input [(ngModel)]="caja.monto" type="text" class="form-control" name="monto" id="monto" #monto="ngModel" placeholder="Monto" autofocus required>
+                      <input [(ngModel)]="caja.monto" type="text" class="form-control" name="monto" id="monto" #monto="ngModel" placeholder="Monto" onkeypress="return filterFloat(event,this);" autofocus required>
                     </div>
                       <div class="alert alert-danger" *ngIf="monto.invalid && (monto.dirty || monto.touched)">
                           <div *ngIf="monto.errors.required">

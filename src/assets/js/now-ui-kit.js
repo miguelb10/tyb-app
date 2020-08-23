@@ -174,7 +174,9 @@ $(document).on('click', '.navbar-toggler', function() {
     nowuiKit.misc.navbar_menu_visible = 1;
   }
 });
-
+$(document).on('click', '.nav-link', function() {
+  $('html').removeClass('nav-open');
+});
 nowuiKit = {
   misc: {
     navbar_menu_visible: 0
@@ -274,3 +276,38 @@ function debounce(func, wait, immediate) {
     if (immediate && !timeout) func.apply(context, args);
   };
 };
+
+function filterFloat(evt,input){
+  // Backspace = 8, Enter = 13, ‘0′ = 48, ‘9′ = 57, ‘.’ = 46, ‘-’ = 43
+  var key = window.Event ? evt.which : evt.keyCode;
+  var chark = String.fromCharCode(key);
+  var tempValue = input.value+chark;
+  if(key >= 48 && key <= 57){
+      if(filter(tempValue)=== false){
+          return false;
+      }else{
+          return true;
+      }
+  }else{
+        if(key == 8 || key == 13 || key == 0) {
+            return true;
+        }else if(key == 46){
+              if(filter(tempValue)=== false){
+                  return false;
+              }else{
+                  return true;
+              }
+        }else{
+            return false;
+        }
+  }
+}
+function filter(__val__){
+  var preg = /^([0-9]+\.?[0-9]{0,4})$/;
+  if(preg.test(__val__) === true){
+      return true;
+  }else{
+     return false;
+  }
+
+}

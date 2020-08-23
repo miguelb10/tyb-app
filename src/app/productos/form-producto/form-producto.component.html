@@ -44,7 +44,7 @@
                   <label for="precio" class="col-form-label col-sm-2">Precio</label>
                   <div class="col-sm-6">
                     <div class="input-group no-border input-lg">
-                      <input [(ngModel)]="producto.precio" type="text" class="form-control" name="precio" id="precio" #precio="ngModel" placeholder="Precio" autofocus required>
+                      <input [(ngModel)]="producto.precio" type="text" class="form-control" name="precio" id="precio" #precio="ngModel" onkeypress="return filterFloat(event,this);" placeholder="Precio" autofocus required>
                     </div>
                       <div class="alert alert-danger" *ngIf="precio.invalid && (precio.dirty || precio.touched)">
                           <div *ngIf="precio.errors.required">
