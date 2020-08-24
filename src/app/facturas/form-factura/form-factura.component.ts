@@ -10,7 +10,6 @@ import { map, flatMap } from 'rxjs/operators';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import swal from 'sweetalert2';
 import { ItemFactura } from '../item-factura';
-import { Cliente } from 'src/app/clientes/cliente';
 
 @Component({
   selector: 'app-form-factura',
@@ -21,11 +20,8 @@ export class FormFacturaComponent implements OnInit {
 
   titulo: string = 'Nueva factura';
   factura: Factura = new Factura();
-  cliente: Cliente = new Cliente();
   autocompleteControlProducto = new FormControl();
-  autocompleteControlCliente = new FormControl();
   productosFiltrados: Observable<Producto[]>;
-  clientesFiltrados: Observable<Cliente[]>;
 
   constructor(private clienteService: ClienteService,
     private facturaService: FacturaService,
@@ -33,6 +29,12 @@ export class FormFacturaComponent implements OnInit {
     private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.activatedRoute.paramMap.subscribe(params => {
+      let clienteId = +params.get('clienteId');
+      this.clienteService.getCliente(clienteId).subscribe(cliente => {
+        this.factura.cliente = cliente
+      });
+    });
     this.productosFiltrados = this.autocompleteControlProducto.valueChanges
       .pipe(
         map(value => typeof value === 'string'? value: value.nombre),
@@ -46,18 +48,10 @@ export class FormFacturaComponent implements OnInit {
     return this.facturaService.filtrarProductos(filterValue);
   }
 
-  private _filterCliente(value: string): Observable<Cliente[]> {
-    const filterValue = value.toLowerCase();
-
-    return this.facturaService.filtrarClientes(filterValue);
-  }
-
   mostrarNombreProducto(producto?: Producto): string | undefined{
     return producto? producto.nombre : undefined;
   }
-  mostrarNombreCliente(cliente?: Cliente): string | undefined{
-    return cliente? cliente.nombre : undefined;
-  }
+
   seleccionarProducto(eventProducto: MatAutocompleteSelectedEvent): void{
     let producto = eventProducto.option.value as Producto;
     console.log(producto);
@@ -73,15 +67,6 @@ export class FormFacturaComponent implements OnInit {
     this.autocompleteControlProducto.setValue('');
     eventProducto.option.focus();
     eventProducto.option.deselect();
-  }
-
-  seleccionarCliente(eventCliente: MatAutocompleteSelectedEvent): void{
-    let cliente = eventCliente.option.value as Cliente;
-    console.log(cliente);
-
-    this.autocompleteControlCliente.setValue(cliente.nombre);
-    eventCliente.option.focus();
-    eventCliente.option.deselect();
   }
 
   actualizarCantidad(id: number, eventProducto: any): void{
@@ -124,13 +109,14 @@ export class FormFacturaComponent implements OnInit {
     console.log(this.factura);
 
     if(this.factura.items.length == 0){
+      console.log('paso1');
       this.autocompleteControlProducto.setErrors({'invalid': true});
     }
 
     if(facturaForm.form.valid && this.factura.items.length > 0){
       this.facturaService.create(this.factura).subscribe(factura => {
-        swal.fire(this.titulo, `Factura ${factura.descripcion} creada con éxito!`, 'success');
-        this.router.navigate(['/facturas', factura.id]);
+        swal.fire(this.titulo, `La factura del cliente ${this.factura.cliente.nombre} creada con éxito!`, 'success');
+        this.router.navigate(['/facturas']);
       });
     }
   }

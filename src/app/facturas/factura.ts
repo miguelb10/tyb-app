@@ -27,4 +27,11 @@ export class Factura {
     items: Array<ItemFactura> = [];
     cliente: Cliente;
     serie: Serie[];
+    calcularGranTotal(): number{
+        this.importeTotal = 0;
+        this.items.forEach((item: ItemFactura) => {
+            this.importeTotal += item.calcularImporte();
+        });
+        return this.importeTotal;
+    }
 }

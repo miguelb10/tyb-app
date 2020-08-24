@@ -2,33 +2,34 @@
 <app-modal-clientes *ngIf="semaforo"></app-modal-clientes>
 <div class="wrapper">
   <div class="section">
-  <div class="container">
-    <div class="card border-primary mb-3">
-  <div class="card-body text-primary">
-    <h5 class="card-title">Listado de facturas</h5>
-    <div class="my-2 text-left">
-      <button *ngIf="authService.hasRole('ROLE_ADMIN')" class="btn btn-rounded btn-primary" type="button" (click)="abrirModal()">
-        Crear Factura
-      </button>
-    </div>
-    <div *ngIf="facturas?.length == 0" class="alert alert-info">
-      No hay registros en la base de datos!
-    </div>
-    <table class="table table-bordered table-striped" *ngIf="facturas?.length>0">
-        <thead>
-          <tr>
-              <th *ngIf="authService.hasRole('ROLE_USER')">#</th>
-              <th>Serie</th>
-              <th>Correlativo</th>
-              <th>Cliente</th>
-              <th>Total</th>
-              <th>Fecha de emisión</th>
-              <th *ngIf="authService.hasRole('ROLE_ADMIN')">Editar</th>
-              <th *ngIf="authService.hasRole('ROLE_ADMIN')">Eliminar</th>
-          </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let factura of facturas">
+    <div class="container">
+      <div class="card border-primary mb-3">
+        <div class="card-body text-primary">
+          <h5 class="card-title">Listado de facturas</h5>
+          <div class="my-2 text-left">
+            <button *ngIf="authService.hasRole('ROLE_ADMIN')" class="btn btn-rounded btn-primary" type="button"
+              (click)="abrirModal()">
+              Crear Factura
+            </button>
+          </div>
+          <div *ngIf="facturas?.length == 0" class="alert alert-info">
+            No hay registros en la base de datos!
+          </div>
+          <table class="table table-bordered table-striped" *ngIf="facturas?.length>0">
+            <thead>
+              <tr>
+                <th *ngIf="authService.hasRole('ROLE_USER')">#</th>
+                <th>Serie</th>
+                <th>Correlativo</th>
+                <th>Cliente</th>
+                <th>Total</th>
+                <th>Fecha de emisión</th>
+                <th *ngIf="authService.hasRole('ROLE_ADMIN')">Editar</th>
+                <th *ngIf="authService.hasRole('ROLE_ADMIN')">Eliminar</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let factura of facturas">
                 <td *ngIf="authService.hasRole('ROLE_USER')">{{ factura.id }}
                 </td>
                 <td>{{ factura.serie.nombre }}</td>
@@ -37,42 +38,19 @@
                 <td>{{ factura.total }}</td>
                 <td>{{ factura.fechaEmision }}</td>
                 <td *ngIf="authService.hasRole('ROLE_ADMIN')">
-                  <button type="button" name="button" [routerLink]="['/factura/form', factura.id]" class="btn btn-primary">Editar</button>
+                  <button type="button" name="button" [routerLink]="['/factura/form', factura.id]"
+                    class="btn btn-primary">Editar</button>
                 </td>
                 <td *ngIf="authService.hasRole('ROLE_ADMIN')">
-                  <button type="button" name="eliminar" (click)='delete(factura)' class="btn btn-danger">Eliminar</button>
+                  <button type="button" name="eliminar" (click)='delete(factura)'
+                    class="btn btn-danger">Eliminar</button>
                 </td>
-            </tr>
-        </tbody>
-    </table>
-    <paginator-nav *ngIf="paginador" [paginador] = "paginador" [linkPaginador]="linkPaginador"></paginator-nav>
-  </div>
-</div>
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-  Launch demo modal
-</button>
-
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        ...
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+              </tr>
+            </tbody>
+          </table>
+          <paginator-nav *ngIf="paginador" [paginador]="paginador" [linkPaginador]="linkPaginador"></paginator-nav>
+        </div>
       </div>
     </div>
   </div>
-</div>
-</div>
-</div>
 </div>
