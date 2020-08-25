@@ -24,7 +24,7 @@ export class FacturaService {
       }),
       map(response => {
         (response.content as Factura[]).map( factura => {
-          factura.descripcion = factura.descripcion.toUpperCase();
+          factura.tipoOperacion = factura.tipoOperacion.toUpperCase();
           return factura;
         });
         return response;

@@ -24,8 +24,7 @@
                 <th>Cliente</th>
                 <th>Total</th>
                 <th>Fecha de emisión</th>
-                <th *ngIf="authService.hasRole('ROLE_ADMIN')">Editar</th>
-                <th *ngIf="authService.hasRole('ROLE_ADMIN')">Eliminar</th>
+                <th *ngIf="authService.hasRole('ROLE_ADMIN')">Anular</th>
               </tr>
             </thead>
             <tbody>
@@ -34,13 +33,9 @@
                 </td>
                 <td>{{ factura.serie.nombre }}</td>
                 <td>{{ factura.correlativo }}</td>
-                <td>{{ factura.cliente.nbombre }}</td>
-                <td>{{ factura.total }}</td>
+                <td>{{ factura.cliente.nombre }}</td>
+                <td>{{ factura.importeTotal }}</td>
                 <td>{{ factura.fechaEmision }}</td>
-                <td *ngIf="authService.hasRole('ROLE_ADMIN')">
-                  <button type="button" name="button" [routerLink]="['/factura/form', factura.id]"
-                    class="btn btn-primary">Editar</button>
-                </td>
                 <td *ngIf="authService.hasRole('ROLE_ADMIN')">
                   <button type="button" name="eliminar" (click)='delete(factura)'
                     class="btn btn-danger">Eliminar</button>
