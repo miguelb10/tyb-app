@@ -80,7 +80,78 @@
                 </tr>
               </tbody>
             </table>
-            <h5 class="float-right" *ngIf="factura.items.length>0">Gran total: <span>{{factura.calcularGranTotal()}}</span></h5>
+            <div class="form-group row" *ngIf="factura.items.length>0">
+              <label for="subTotal" class="col-form-label col-sm-2">Sub Total</label>
+              <div class="col-sm-6">
+                <div class="input-group no-border input-lg">
+                  <input [(ngModel)]="factura.subTotal" type="number" class="form-control" name="subTotal" id="subTotal"
+                    #subTotal="ngModel" placeholder="Sub Total" value="{{factura.calcularSubTotal()}}" disabled>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row" *ngIf="factura.items.length>0">
+              <label for="anticipos" class="col-form-label col-sm-2">Anticipos</label>
+              <div class="col-sm-6">
+                <div class="input-group no-border input-lg">
+                  <input [(ngModel)]="factura.anticipos" type="number" class="form-control" name="anticipos" id="anticipos"
+                    #anticipos="ngModel" placeholder="Anticipos" autofocus>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row" *ngIf="factura.items.length>0">
+              <label for="descuentos" class="col-form-label col-sm-2">Descuentos</label>
+              <div class="col-sm-6">
+                <div class="input-group no-border input-lg">
+                  <input [(ngModel)]="factura.descuentos" type="number" class="form-control" name="descuentos" id="descuentos"
+                    #descuentos="ngModel" placeholder="Descuentos" autofocus>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row" *ngIf="factura.items.length>0">
+              <label for="valorVenta" class="col-form-label col-sm-2">Valor Venta</label>
+              <div class="col-sm-6">
+                <div class="input-group no-border input-lg">
+                  <input [(ngModel)]="factura.valorVenta" type="number" class="form-control" name="valorVenta" id="valorVenta"
+                    #valorVenta="ngModel" placeholder="Valor Venta" value="{{factura.calcularValorVenta()}}" disabled>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row" *ngIf="factura.items.length>0">
+              <label for="igv" class="col-form-label col-sm-2">IGV</label>
+              <div class="col-sm-6">
+                <div class="input-group no-border input-lg">
+                  <input [(ngModel)]="factura.igv" type="number" class="form-control" name="igv" id="igv"
+                    #igv="ngModel" placeholder="IGV" value="{{factura.calcularIGV()}}" disabled>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row" *ngIf="factura.items.length>0">
+              <label for="otrosCargos" class="col-form-label col-sm-2">Otros Cargos</label>
+              <div class="col-sm-6">
+                <div class="input-group no-border input-lg">
+                  <input [(ngModel)]="factura.otrosCargos" type="number" class="form-control" name="otrosCargos" id="otrosCargos"
+                    #otrosCargos="ngModel" placeholder="Otros Cargos" autofocus>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row" *ngIf="factura.items.length>0">
+              <label for="otrosTributos" class="col-form-label col-sm-2">Otros Tributos</label>
+              <div class="col-sm-6">
+                <div class="input-group no-border input-lg">
+                  <input [(ngModel)]="factura.otrosTributos" type="number" class="form-control" name="otrosTributos" id="otrosTributos"
+                    #otrosTributos="ngModel" placeholder="Otros Tributos" autofocus>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row" *ngIf="factura.items.length>0">
+              <label for="importeTotal" class="col-form-label col-sm-2">Importe Total</label>
+              <div class="col-sm-6">
+                <div class="input-group no-border input-lg">
+                  <input [(ngModel)]="factura.importeTotal" type="number" class="form-control" name="importeTotal" id="importeTotal"
+                    #importeTotal="ngModel" placeholder="Importe Total" value="{{factura.calcularImporteTotal()}}" disabled>
+                </div>
+              </div>
+            </div>
             <div class="form-group row">
               <div class="col-sm-6">
                 <input type="submit" (click)="create(facturaForm)" value="Crear Factura" class="btn btn-secondary" />

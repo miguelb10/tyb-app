@@ -32,7 +32,7 @@ export class FormFacturaComponent implements OnInit {
     this.activatedRoute.paramMap.subscribe(params => {
       let clienteId = +params.get('clienteId');
       this.clienteService.getCliente(clienteId).subscribe(cliente => {
-        this.factura.cliente = cliente
+        this.factura.cliente = cliente;
       });
     });
     this.productosFiltrados = this.autocompleteControlProducto.valueChanges

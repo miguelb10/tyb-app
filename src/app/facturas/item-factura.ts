@@ -5,7 +5,13 @@ export class ItemFactura {
   cantidad: number = 1;
   importe: number;
 
-  public calcularImporte(): number{
-      return this.cantidad * this.producto.precio;
+  eliminarDecimales(valor: number): number {
+    return Number(valor.toFixed(4));
+  }
+  public calcularImporte(): number {
+    var calculo;
+    calculo = this.cantidad * this.producto.precio;
+    calculo = this.eliminarDecimales(calculo);
+    return calculo;
   }
 }
